@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html'; charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title> Lucky Number </title>
+
+    <script>
+
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max -min + 1) + min)
+        }
+
+        function displayRandomNumbers() {
+            const rndInt1 = randomNumber(0, 99);
+            const rndInt2 = randomNumber(0, 99);
+
+            const randomNumbersElement = document.getElementById("randomNumbers");
+            randomNumbersElement.textContent = `Số ngẫu nhiên 1: ${rndInt1}, Số ngẫu nhiên 2: ${rndInt2}`;
+        }
+
+    </script>
+
+    <style type="text/css">
+
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 15px;
+            font-size: large;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: cyan;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <button onclick="displayRandomNumbers()">Hiển thị số ngẫu nhiên</button>
+    <p id="randomNumbers">Nhấn nút để hiển thị hai số ngẫu nhiên.</p>
+
+    <form name="lucky_number_form" onsubmit="checkResult(event)">
+        <table>
+
+            <tr>
+                <td> Name </td>
+                <td><input type="text" name="fname" maxlength="50" /></td>
+            </tr>
+
+            <tr>
+                <td> Age </td>
+                <td><input type="number" name="age" min="1" max="200" /></td>
+            </tr>
+
+            <tr>
+                <td> Sum 2 number </td>
+                <td><input type="number" name="sumResult" max="200" /></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="submit" value="Submit" />
+                    <input type="reset" name="reset" value="Reset" />
+                </td>
+            </tr>
+
+        </table>
+    </form>
+
+    <div id="resultMessage"></div>
+
+    <script>
+
+        function checkResult(event) {
+            event.preventDefault();
+
+            const userName = document.lucky_number_form.fname.value;
+            const userAge = document.lucky_number_form.age.value;
+            const userSumResult = parseInt(document.lucky_number_form.sumResult.value);
+
+            const rndInt1 = parseInt(document.getElementById("randomNumbers").textContent.match(/Số ngẫu nhiên 1: (\d+)/)[1]);
+            const rndInt2 = parseInt(document.getElementById("randomNumbers").textContent.match(/Số ngẫu nhiên 2: (\d+)/)[1]);
+
+            const correctSum = rndInt1 + rndInt2;
+
+            const resultMessageElement = document.getElementById("resultMessage");
+
+            if (userSumResult === correctSum) {
+                resultMessageElement.textContent = `Congratulation ${userName} with age ${userAge}.`;
+                resultMessageElement.style.color = "green";
+            } else {
+                resultMessageElement.textContent = "Wrong answer, please try again.";
+                resultMessageElement.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>
